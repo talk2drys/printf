@@ -30,29 +30,29 @@ int _printf(const char *format, ...)
 				{
 					format++;
 					if (*format >= 'a' && *format <= 'z')
-					{
-						handle_format_specifier_lowercase(
-							&format, list_print, &characters_printed);
-					}
+						{
+							handle_format_specifier_lowercase(
+								&format, list_print, &characters_printed);
+						}
 					else if (*format >= 'A' && *format <= 'Z')
-					{
-						handle_format_specifier_uppercase(
-							&format, list_print, &characters_printed);
-					}
+						{
+							handle_format_specifier_uppercase(
+								&format, list_print, &characters_printed);
+						}
 					else
-					{
-						/* Invalid format specifier */
-						break;
-					}
+						{
+							handle_format_specifier_other_characters(
+								&format, list_print, &characters_printed);
+						}
 				}
 			else
-			{
-				char buffer = *format;
+				{
+					char buffer = *format;
 
-				write(STDOUT_FILENO, &buffer, 1);
-				format++;
-				characters_printed++;
-			}
+					write(STDOUT_FILENO, &buffer, 1);
+					format++;
+					characters_printed++;
+				}
 		}
 
 	va_end(list_print);

@@ -129,12 +129,6 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 			print_string(list_print, characters_printed);
 			(*format)++;
 			break;
-
-		case '%':
-			print_percent(characters_printed);
-			(*format)++;
-			break;
-
 		case 'd':
 		case 'i':
 			print_integer(list_print, characters_printed);

@@ -20,5 +20,7 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 									   int *characters_printed);
 void handle_format_specifier_uppercase(const char **format, va_list list_print,
 									   int *characters_printed);
+void handle_format_specifier_other_characters(const char **format, va_list list_print,
+											  int *characters_printed);
 
 #endif

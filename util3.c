@@ -18,3 +18,18 @@ void print_pointer(va_list list_print, int *characters_printed)
 {
 	print_unsigned_int(list_print, characters_printed, 16);
 }
+
+
+void handle_format_specifier_other_characters(const char **format, va_list list_print,
+									   int *characters_printed)
+{
+	switch (**format)
+		{
+		case '%':
+			print_percent(characters_printed);
+			(*format)++;
+			break;
+		default:
+			(*format)++;
+		}
+}
