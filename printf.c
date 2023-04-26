@@ -58,3 +58,30 @@ int _printf(const char *format, ...)
 	va_end(list_print);
 	return (characters_printed);
 }
+
+
+/**
+ * str_reverse - reverses a null-terminated string in place.
+ *
+ * @str: The string to be reversed.
+ *
+ * Return: void
+ */
+char *str_reverse(char *str)
+{
+	size_t len = strlen(str);
+	char *reverse = (char *) malloc(len + 1);
+
+	if (reverse == NULL)
+	{
+		return (NULL);
+	}
+	size_t i, j;
+
+	for (i = 0, j = len - 1; i < len; i++, j--)
+	{
+		reverse[i] = str[j];
+	}
+	reverse[len] = '\0';
+	return (reverse);
+}
