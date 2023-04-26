@@ -143,15 +143,15 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 			(*format)++;
 			break;
 		case 'u':
-			print_unsigned(list_print, characters_printed, 10, 0);
+			print_unsigned_integer(list_print, characters_printed, 10, 0);
 			(*format)++;
 			break;
 		case 'o':
-			print_unsigned(list_print, characters_printed, 8, 0);
+			print_unsigned_integer(list_print, characters_printed, 8, 0);
 			(*format)++;
 			break;
 		case 'x':
-			print_unsigned(list_print, characters_printed, 16, 0);
+			print_unsigned_integer(list_print, characters_printed, 16, 0);
 			(*format)++;
 			break;
 		default:
