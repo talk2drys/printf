@@ -27,4 +27,5 @@ void handle_format_specifier_other_characters(const char **format,
 											  int *characters_printed);
 void print_pointer_address(va_list list_print, int *characters_printed);
 void print_unknown(char unknown, int *characters_printed);
+char* rot13(char* message);
 #endif

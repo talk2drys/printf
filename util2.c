@@ -146,6 +146,13 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 		print_str_hex(va_arg(list_print, char *), characters_printed);
 		(*format)++;
 		break;
+	case 'R':
+		char *string = va_arg(list_print, char *);
+		char *rot13_string = rot13(string);
+		write(STDOUT_FILENO, rot13_string, strlen(rot13_string));
+		(*characters_printed) += strlen(rot13_string);
+		(*format)++;
+		break;
 	default:
 		print_unknown(**format, characters_printed);
 		(*format)++;
@@ -156,20 +163,23 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 
 /* https://en.wikipedia.org/wiki/ROT13 */
 char* rot13(char* message) {
-	char* output = message;
-	while (*message) {
+	size_t len = strlen(message);
+	char* output = (char*) malloc(len + 1);
+	char* outptr = output;
+	for (size_t i = 0; i < len; i++) {
 		if (*message >= 'a' && *message <= 'z') {
-			*output = (*message - 'a' + 13) % 26 + 'a';
+			int h = (*message - 'a' + 13) % 26 + 'a';
+			*outptr = h;
 		}
 		else if (*message >= 'A' && *message <= 'Z') {
-			*output = (*message - 'A' + 13) % 26 + 'A';
+			*outptr = (*message - 'A' + 13) % 26 + 'A';
 		}
 		else {
-			*output = *message;
+			*outptr = *message;
 		}
 		message++;
-		output++;
+		outptr++;
 	}
-	*output = '\0';
+	*outptr = '\0';
 	return output;
 }
