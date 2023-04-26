@@ -152,3 +152,24 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 	}
 }
 
+
+
+/* https://en.wikipedia.org/wiki/ROT13 */
+char* rot13(char* message) {
+	char* output = message;
+	while (*message) {
+		if (*message >= 'a' && *message <= 'z') {
+			*output = (*message - 'a' + 13) % 26 + 'a';
+		}
+		else if (*message >= 'A' && *message <= 'Z') {
+			*output = (*message - 'A' + 13) % 26 + 'A';
+		}
+		else {
+			*output = *message;
+		}
+		message++;
+		output++;
+	}
+	*output = '\0';
+	return output;
+}
