@@ -84,6 +84,38 @@ void print_unsigned_integer(va_list list_print, int *characters_printed, int bas
 	}
 }
 
+/**
+ * str_reverse - reverses a null-terminated string in place.
+ *
+ * @str: The string to be reversed.
+ *
+ * Return: void
+ */
+char *str_reverse(char *str)
+{
+	size_t len = strlen(str);
+	char *reverse = (char*) malloc(len + 1);
+	if (reverse == NULL) {
+		// handle memory allocation error
+		return;
+	}
+	size_t i, j;
+	for (i = 0, j = len - 1; i < len; i++, j--)
+	{
+		reverse[i] = str[j];
+	}
+	reverse[len] = '\0';
+	return (reverse);
+}
+
+void handle_string_reverse_modifier(va_list list_print, int *characters_printed) {
+	char *string = va_arg(list_print, char *);
+	char * rev = str_reverse(string);
+
+	write(STDOUT_FILENO, rev, strlen(rev));
+	(*characters_printed) += strlen(rev);
+}
+
 void handle_format_specifier_other_characters(const char **format,
 											  __attribute__((unused)) va_list list_print,
 											  int *characters_printed)

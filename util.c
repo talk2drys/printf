@@ -154,6 +154,10 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 			print_unsigned_integer(list_print, characters_printed, 16, 0);
 			(*format)++;
 			break;
+		case 'r':
+			handle_string_reverse_modifier(list_print, characters_printed);
+			(*format)++;
+			break;
 		default:
 			print_unknown(**format, characters_printed);
 			(*format)++;

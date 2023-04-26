@@ -43,26 +43,6 @@ void print_binary(va_list list_print, int *characters_printed)
 	}
 }
 
-/**
- * str_reverse - reverses a null-terminated string in place.
- *
- * @str: The string to be reversed.
- *
- * Return: void
- */
-void str_reverse(char *str)
-{
-	int i, j;
-	char temp;
-
-	for (i = 0, j = strlen(str) - 1; i < j; i++, j--)
-	{
-		temp = str[i];
-		str[i] = str[j];
-		str[j] = temp;
-	}
-}
-
 void print_unsigned_int(va_list list_print, int *characters_printed,
 						unsigned int base)
 {
