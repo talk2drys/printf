@@ -144,6 +144,10 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 			print_binary(list_print, characters_printed);
 			(*format)++;
 			break;
+		case 'p':
+			print_pointer(list_print, characters_printed);
+			(*format)++;
+			break;
 		default:
 			(*format)++;
 		}

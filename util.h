@@ -15,5 +15,10 @@ void print_unsigned_int(va_list list_print, int *characters_printed,
 
 /* we alreadt have a print_string definition */
 void print_str_hex(char *str, int *printed_chars);
+void print_pointer(va_list list_print, int *characters_printed);
+void handle_format_specifier_lowercase(const char **format, va_list list_print,
+									   int *characters_printed);
+void handle_format_specifier_uppercase(const char **format, va_list list_print,
+									   int *characters_printed);
 
 #endif

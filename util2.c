@@ -1,9 +1,10 @@
+#include "util.h"
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "util.h"
 
 /**
  * print_binary - utility function that is used by a printing a %b
@@ -91,7 +92,6 @@ void print_unsigned_int(va_list list_print, int *characters_printed,
 	(*characters_printed) += strlen(buffer);
 }
 
-
 /**
  * print_str_hex - Prints a string with non-printable characters in hexadecimal
  * format
@@ -134,7 +134,7 @@ void print_str_hex(char *str, int *printed_chars)
  Returns: void
  **/
 void handle_format_specifier_uppercase(const char **format, va_list list_print,
-							 int *characters_printed)
+									   int *characters_printed)
 {
 	switch (**format)
 	{
@@ -152,3 +152,4 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 		(*format)++;
 	}
 }
+
