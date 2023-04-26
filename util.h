@@ -31,4 +31,6 @@ char *rot13(char *message);
 void handle_string_reverse_modifier(va_list list_print,
 									int *characters_printed);
 char *str_reverse(char *str);
+void handle_ouxX(va_list list_print, int *characters_printed,
+				 char conversion_specifier);
 #endif

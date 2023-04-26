@@ -69,14 +69,17 @@ int _printf(const char *format, ...)
  */
 char *str_reverse(char *str)
 {
-	size_t len = strlen(str);
-	char *reverse = (char *) malloc(len + 1);
+	size_t len;
+  char *reverse;
+	size_t i, j;
+
+	len = strlen(str);
+	reverse = (char *) malloc(len + 1);
 
 	if (reverse == NULL)
 	{
 		return (NULL);
 	}
-	size_t i, j;
 
 	for (i = 0, j = len - 1; i < len; i++, j--)
 	{

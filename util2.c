@@ -146,11 +146,13 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 /* https://en.wikipedia.org/wiki/ROT13 */
 char *rot13(char *message)
 {
+	size_t i;
+
 	size_t len = strlen(message);
 	char *output = (char *) malloc(len + 1);
 	char *outptr = output;
 
-	for (size_t i = 0; i < len; i++)
+	for (i = 0; i < len; i++)
 	{
 		if (*message >= 'a' && *message <= 'z')
 		{
