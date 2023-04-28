@@ -152,12 +152,10 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 		handle_ouxX(list_print, characters_printed, **format);
 		(*format)++;
 		break;
-	/*
-	 * case 'r':
-		/ * handle_string_reverse_modifier(list_print, characters_printed);
+	case 'r':
+		handle_string_reverse_modifier(list_print, characters_printed);
 		(*format)++;
 		break;
-		*/
 	default:
 		print_unknown(**format, characters_printed);
 		(*format)++;

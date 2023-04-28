@@ -97,6 +97,7 @@ void handle_string_reverse_modifier(va_list list_print,
 	char *rev = str_reverse(string);
 
 	write(STDOUT_FILENO, rev, strlen(rev));
+	fflush(stdout);
 	(*characters_printed) += strlen(rev);
 }
 
