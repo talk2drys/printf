@@ -26,6 +26,18 @@ void print_binary(va_list list_print, int *characters_printed)
 	int i, remainder;
 	int *binary = (int *)malloc(sizeof(int) * 32);
 
+	if (!binary)
+		return;
+
+	if (number == 0)
+	{
+		char c = '0';
+		write(STDOUT_FILENO, &c, 1);
+		fflush(stdout);
+		(*characters_printed)++;
+		return;
+	}
+
 	for (i = 0; number > 0 && i < 32; i++)
 	{
 		remainder = number % 2;
