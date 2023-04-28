@@ -19,44 +19,44 @@
  **/
 int _printf(const char *format, ...)
 {
-  va_list list_print;
-  int characters_printed = 0;
+	va_list list_print;
+	int characters_printed = 0;
 
-  va_start(list_print, format);
+	va_start(list_print, format);
 
-  while (*format != STRING_NULL_TERMINATION)
+	while (*format != STRING_NULL_TERMINATION)
 	{
-	  if (*format == '%')
+		if (*format == '%')
 		{
-		  format++;
-		  if (*format >= 'a' && *format <= 'z')
+			format++;
+			if (*format >= 'a' && *format <= 'z')
 			{
-			  handle_format_specifier_lowercase(&format, list_print,
-												&characters_printed);
+				handle_format_specifier_lowercase(&format, list_print,
+																					&characters_printed);
 			}
-		  else if (*format >= 'A' && *format <= 'Z')
+			else if (*format >= 'A' && *format <= 'Z')
 			{
-			  handle_format_specifier_uppercase(&format, list_print,
-												&characters_printed);
+				handle_format_specifier_uppercase(&format, list_print,
+																					&characters_printed);
 			}
-		  else
+			else
 			{
-			  handle_format_specifier_other_characters(&format, list_print,
-													   &characters_printed);
+				handle_format_specifier_other_characters(&format, list_print,
+																								 &characters_printed);
 			}
 		}
-	  else
+		else
 		{
-		  char buffer = *format;
+			char buffer = *format;
 
-		  write(STDOUT_FILENO, &buffer, 1);
-		  format++;
-		  characters_printed++;
+			write(STDOUT_FILENO, &buffer, 1);
+			format++;
+			characters_printed++;
 		}
 	}
 
-  va_end(list_print);
-  return (characters_printed);
+	va_end(list_print);
+	return (characters_printed);
 }
 
 /**
@@ -68,22 +68,22 @@ int _printf(const char *format, ...)
  */
 char *str_reverse(char *str)
 {
-  size_t len;
-  char *reverse;
-  size_t i, j;
+	size_t len;
+	char *reverse;
+	size_t i, j;
 
-  len = strlen(str);
-  reverse = (char *)malloc(len + 1);
+	len = strlen(str);
+	reverse = (char *)malloc(len + 1);
 
-  if (reverse == NULL)
+	if (reverse == NULL)
 	{
-	  return (NULL);
+		return (NULL);
 	}
 
-  for (i = 0, j = len - 1; i < len; i++, j--)
+	for (i = 0, j = len - 1; i < len; i++, j--)
 	{
-	  reverse[i] = str[j];
+		reverse[i] = str[j];
 	}
-  reverse[len] = '\0';
-  return (reverse);
+	reverse[len] = '\0';
+	return (reverse);
 }

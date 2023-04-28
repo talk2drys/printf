@@ -116,45 +116,46 @@ void print_integer(va_list list_print, int *characters_printed)
  Returns: void
  **/
 void handle_format_specifier_lowercase(const char **format, va_list list_print,
-									   int *characters_printed)
+																			 int *characters_printed)
 {
 	switch (**format)
-		{
-		case 'c':
-			print_char(list_print, characters_printed);
-			(*format)++;
-			break;
+	{
+	case 'c':
+		print_char(list_print, characters_printed);
+		(*format)++;
+		break;
 
-		case 's':
-			print_string(list_print, characters_printed);
-			(*format)++;
-			break;
-		case 'd':
-		case 'i':
-			print_integer(list_print, characters_printed);
-			(*format)++;
-			break;
-		case 'b':
-			print_binary(list_print, characters_printed);
-			(*format)++;
-			break;
-		case 'p':
-			print_pointer_address(list_print, characters_printed);
-			(*format)++;
-			break;
-		case 'u':
-		case 'o':
-		case 'x':
-			handle_ouxX(list_print, characters_printed, **format);
-			(*format)++;
-			break;
-		/* case 'r':
-			/ * handle_string_reverse_modifier(list_print, characters_printed);
-			(*format)++;
-			break;
-			*/
-		default:
-			print_unknown(**format, characters_printed);
-			(*format)++;
-		}
+	case 's':
+		print_string(list_print, characters_printed);
+		(*format)++;
+		break;
+	case 'd':
+	case 'i':
+		print_integer(list_print, characters_printed);
+		(*format)++;
+		break;
+	case 'b':
+		print_binary(list_print, characters_printed);
+		(*format)++;
+		break;
+	case 'p':
+		print_pointer_address(list_print, characters_printed);
+		(*format)++;
+		break;
+	case 'u':
+	case 'o':
+	case 'x':
+		handle_ouxX(list_print, characters_printed, **format);
+		(*format)++;
+		break;
+	/*
+	 * case 'r':
+		/ * handle_string_reverse_modifier(list_print, characters_printed);
+		(*format)++;
+		break;
+		*/
+	default:
+		print_unknown(**format, characters_printed);
+		(*format)++;
+	}
 }
