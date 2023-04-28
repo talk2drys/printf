@@ -91,6 +91,14 @@ void print_str_hex(char *str, int *printed_chars)
 			putchar(*str);
 			(*printed_chars)++;
 		}
+		else
+		{
+			putchar('\\');
+			putchar('x');
+			putchar((*str / 16) < 10 ? (*str / 16) + '0' : (*str / 16) - 10 + 'A');
+			putchar((*str % 16) < 10 ? (*str % 16) + '0' : (*str % 16) - 10 + 'A');
+			(*printed_chars) += 4;
+		}
 		str++;
 	}
 }
