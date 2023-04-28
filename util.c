@@ -137,7 +137,6 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 		print_char(list_print, characters_printed);
 		(*format)++;
 		break;
-
 	case 's':
 		print_string(list_print, characters_printed);
 		(*format)++;

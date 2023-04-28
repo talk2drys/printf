@@ -78,9 +78,7 @@ char *str_reverse(char *str)
 	reverse = (char *)malloc(len + 1);
 
 	if (reverse == NULL)
-	{
 		return (NULL);
-	}
 
 	for (i = 0, j = len - 1; i < len; i++, j--)
 	{

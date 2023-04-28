@@ -96,9 +96,14 @@ void handle_str_reverse_modifier(va_list list_print, int *characters_printed)
 	char *string = va_arg(list_print, char *);
 	char *rev = str_reverse(string);
 
+	if (rev == NULL)
+		return;
+
 	write(STDOUT_FILENO, rev, strlen(rev));
 	fflush(stdout);
 	(*characters_printed) += strlen(rev);
+
+	free(rev);
 }
 
 void handle_format_specifier_other_characters(const char **format,
