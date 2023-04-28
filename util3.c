@@ -85,7 +85,7 @@ void print_unsigned_integer(va_list list_print, int *characters_printed,
 	}
 }
 
-void handle_string_reverse_modifier(va_list list_print, int *characters_printed)
+void handle_str_reverse_modifier(va_list list_print, int *characters_printed)
 {
 	char *string = va_arg(list_print, char *);
 	char *rev = str_reverse(string);

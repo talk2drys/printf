@@ -162,7 +162,7 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 		(*format)++;
 		break;
 	case 'r':
-		handle_string_reverse_modifier(list_print, characters_printed);
+		handle_str_reverse_modifier(list_print, characters_printed);
 		(*format)++;
 		break;
 	default:

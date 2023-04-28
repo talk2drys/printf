@@ -24,7 +24,7 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 	{
-		return -1;
+		return (-1);
 	}
 
 	va_start(list_print, format);
@@ -35,29 +35,17 @@ int _printf(const char *format, ...)
 		{
 			format++;
 			if (*format == '\0')
-			{
-				/*
-				write(STDOUT_FILENO, "%", 1);
-				fflush(stdout);
-				*/
 				break;
-			}
 
 			if (*format >= 'a' && *format <= 'z')
-			{
 				handle_format_specifier_lowercase(&format, list_print,
 																					&characters_printed);
-			}
 			else if (*format >= 'A' && *format <= 'Z')
-			{
 				handle_format_specifier_uppercase(&format, list_print,
 																					&characters_printed);
-			}
 			else
-			{
 				handle_format_specifier_other_characters(&format, list_print,
 																								 &characters_printed);
-			}
 		}
 		else
 		{
