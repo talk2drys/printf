@@ -145,6 +145,7 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 		char *rot13_string = rot13(text);
 
 		write(STDOUT_FILENO, rot13_string, strlen(rot13_string));
+		fflush(stdout);
 		(*characters_printed) += strlen(rot13_string);
 		(*format)++;
 		break;
