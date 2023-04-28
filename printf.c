@@ -22,6 +22,11 @@ int _printf(const char *format, ...)
 	va_list list_print;
 	int characters_printed = 0;
 
+	if (format == NULL)
+	{
+		return -1;
+	}
+
 	va_start(list_print, format);
 
 	while (*format != STRING_NULL_TERMINATION)
@@ -29,6 +34,15 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
+			if (*format == '\0')
+			{
+				/*
+				write(STDOUT_FILENO, "%", 1);
+				fflush(stdout);
+				*/
+				break;
+			}
+
 			if (*format >= 'a' && *format <= 'z')
 			{
 				handle_format_specifier_lowercase(&format, list_print,

@@ -9,7 +9,6 @@
 #define True 1
 #define False 0
 
-
 /**
  * print_pointer_address - prints the memory address of a pointer
  *
@@ -28,7 +27,6 @@ void print_pointer_address(va_list list_print, int *characters_printed)
 	fflush(stdout);
 	(*characters_printed) += len;
 }
-
 
 /**
  * print_unknown - print unknow specifier as is
@@ -58,7 +56,7 @@ void print_unknown(char unknown, int *characters_printed)
  * return: void
  */
 void print_unsigned_integer(va_list list_print, int *characters_printed,
-		int base, int uppercase)
+														int base, int uppercase)
 {
 	char buffer[20];
 	unsigned int number = va_arg(list_print, unsigned int);
@@ -74,8 +72,7 @@ void print_unsigned_integer(va_list list_print, int *characters_printed,
 		while (number != 0)
 		{
 			digit = number % base;
-			buffer[i++] =
-				digit < 10 ? '0' + digit : format + digit - 10;
+			buffer[i++] = digit < 10 ? '0' + digit : format + digit - 10;
 			number /= base;
 		}
 	}
@@ -88,10 +85,7 @@ void print_unsigned_integer(va_list list_print, int *characters_printed,
 	}
 }
 
-
-
-void handle_string_reverse_modifier(va_list list_print,
-		int *characters_printed)
+void handle_string_reverse_modifier(va_list list_print, int *characters_printed)
 {
 	char *string = va_arg(list_print, char *);
 	char *rev = str_reverse(string);
@@ -102,12 +96,17 @@ void handle_string_reverse_modifier(va_list list_print,
 }
 
 void handle_format_specifier_other_characters(const char **format,
-											  __attribute__((unused)) va_list list_print,
-											  int *characters_printed)
+																							__attribute__((unused))
+																							va_list list_print,
+																							int *characters_printed)
 {
 	switch (**format)
 	{
 	case '%':
+		print_percent(characters_printed);
+		(*format)++;
+		break;
+	case ' ':
 		print_percent(characters_printed);
 		(*format)++;
 		break;
