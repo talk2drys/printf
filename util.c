@@ -45,9 +45,18 @@ void print_string(va_list list_print, int *characters_printed)
 {
 	char *string = va_arg(list_print, char *);
 
-	write(STDOUT_FILENO, string, strlen(string));
+	if (string == NULL)
+	{
+		write(STDOUT_FILENO, "(null)", 6);
+		(*characters_printed) += 6;
+	}
+	else
+	{
+		write(STDOUT_FILENO, string, strlen(string));
+		(*characters_printed) += strlen(string);
+	}
+
 	fflush(stdout);
-	(*characters_printed) += strlen(string);
 }
 
 /**
