@@ -89,6 +89,7 @@ void print_str_hex(char *str, int *printed_chars)
 		if (*str >= 32 && *str <= 126)
 		{
 			putchar(*str);
+			fflush(stdout);
 			(*printed_chars)++;
 		}
 		else
@@ -97,6 +98,7 @@ void print_str_hex(char *str, int *printed_chars)
 			putchar('x');
 			putchar((*str / 16) < 10 ? (*str / 16) + '0' : (*str / 16) - 10 + 'A');
 			putchar((*str % 16) < 10 ? (*str % 16) + '0' : (*str % 16) - 10 + 'A');
+			fflush(stdout);
 			(*printed_chars) += 4;
 		}
 		str++;
