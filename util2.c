@@ -156,7 +156,11 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 	}
 }
 
-/* https://en.wikipedia.org/wiki/ROT13 */
+/**
+ * rot13 - encodes a string using rot13
+ * @message: string to encode
+ * Return: encoded string
+ */
 char *rot13(char *message)
 {
 	size_t i;

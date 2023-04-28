@@ -85,6 +85,12 @@ void print_unsigned_integer(va_list list_print, int *characters_printed,
 	}
 }
 
+/**
+ * handle_str_reverse_modifier - Reverses a string
+ *
+ * @list_print: A va_list of arguments to print
+ * @characters_printed: A pointer to the total number of characters printed
+ */
 void handle_str_reverse_modifier(va_list list_print, int *characters_printed)
 {
 	char *string = va_arg(list_print, char *);
