@@ -25,6 +25,7 @@ void print_pointer_address(va_list list_print, int *characters_printed)
 	int len = snprintf(buffer, sizeof(buffer), "%p", ptr);
 
 	write(STDOUT_FILENO, buffer, len);
+	fflush(stdout);
 	(*characters_printed) += len;
 }
 
@@ -40,7 +41,9 @@ void print_pointer_address(va_list list_print, int *characters_printed)
 void print_unknown(char unknown, int *characters_printed)
 {
 	write(STDOUT_FILENO, &"%", 1);
+	fflush(stdout);
 	write(STDOUT_FILENO, &unknown, 1);
+	fflush(stdout);
 
 	(*characters_printed)++;
 }
@@ -80,6 +83,7 @@ void print_unsigned_integer(va_list list_print, int *characters_printed,
 	while (--i >= 0)
 	{
 		write(STDOUT_FILENO, &buffer[i], 1);
+		fflush(stdout);
 		(*characters_printed)++;
 	}
 }

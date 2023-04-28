@@ -23,6 +23,7 @@ void print_char(va_list list_print, int *characters_printed)
 	char character = (char)va_arg(list_print, int);
 
 	write(STDOUT_FILENO, &character, 1);
+	fflush(stdout);
 	(*characters_printed)++;
 }
 
@@ -45,6 +46,7 @@ void print_string(va_list list_print, int *characters_printed)
 	char *string = va_arg(list_print, char *);
 
 	write(STDOUT_FILENO, string, strlen(string));
+	fflush(stdout);
 	(*characters_printed) += strlen(string);
 }
 
@@ -61,6 +63,7 @@ void print_string(va_list list_print, int *characters_printed)
 void print_percent(int *characters_printed)
 {
 	write(STDOUT_FILENO, &"%", 1);
+	fflush(stdout);
 
 	(*characters_printed)++;
 }
@@ -93,6 +96,7 @@ void print_integer(va_list list_print, int *characters_printed)
 	snprintf(buffer, 12, "%d", integer);
 
 	write(STDOUT_FILENO, buffer, strlen(buffer));
+	fflush(stdout);
 	(*characters_printed) += strlen(buffer);
 }
 

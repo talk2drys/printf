@@ -38,6 +38,7 @@ void print_binary(va_list list_print, int *characters_printed)
 		char c = binary[i] + '0';
 
 		write(STDOUT_FILENO, &c, 1);
+		fflush(stdout);
 		(*characters_printed)++;
 	}
 
@@ -70,6 +71,7 @@ void print_unsigned_int(va_list list_print, int *characters_printed,
 	str_reverse(buffer);
 
 	write(STDOUT_FILENO, buffer, strlen(buffer));
+	fflush(stdout);
 	(*characters_printed) += strlen(buffer);
 }
 
