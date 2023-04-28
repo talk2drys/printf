@@ -22,54 +22,55 @@
  **/
 void print_binary(va_list list_print, int *characters_printed)
 {
-	unsigned int number = va_arg(list_print, unsigned int);
-	int i, remainder;
-	/* the maximum binary digit that can be store in an int*/
-	int binary[2147483647];
+  unsigned int number = va_arg(list_print, unsigned int);
+  int i, remainder;
+  int *binary = (int *)malloc(sizeof(int) * 32); // allocate memory for 32 bits
 
-	for (i = 0; number > 0 && i < 2147483647; i++)
+  for (i = 0; number > 0 && i < 32; i++) // limit the loop to 32 bits
 	{
-		remainder = number % 2;
-		binary[i] = remainder;
-		number = number / 2;
+	  remainder = number % 2;
+	  binary[i] = remainder;
+	  number = number / 2;
 	}
 
-	for (i = i - 1; i >= 0; i--)
+  for (i = i - 1; i >= 0; i--)
 	{
-		char c = binary[i] + '0';
+	  char c = binary[i] + '0';
 
-		write(STDOUT_FILENO, &c, 1);
-		(*characters_printed)++;
+	  write(STDOUT_FILENO, &c, 1);
+	  (*characters_printed)++;
 	}
+
+  free(binary); // free the memory when done
 }
 
 void print_unsigned_int(va_list list_print, int *characters_printed,
 						unsigned int base)
 {
-	unsigned int num = va_arg(list_print, unsigned int);
-	char buffer[33];
-	int i = 0;
+  unsigned int num = va_arg(list_print, unsigned int);
+  char buffer[33];
+  int i = 0;
 
-	if (num == 0)
+  if (num == 0)
 	{
-		buffer[i++] = '0';
+	  buffer[i++] = '0';
 	}
-	else
+  else
 	{
-		while (num != 0)
+	  while (num != 0)
 		{
-			unsigned int digit = num % base;
+		  unsigned int digit = num % base;
 
-			buffer[i++] = digit < 10 ? digit + '0' : digit + 'a' - 10;
-			num /= base;
+		  buffer[i++] = digit < 10 ? digit + '0' : digit + 'a' - 10;
+		  num /= base;
 		}
 	}
 
-	buffer[i] = '\0';
-	str_reverse(buffer);
+  buffer[i] = '\0';
+  str_reverse(buffer);
 
-	write(STDOUT_FILENO, buffer, strlen(buffer));
-	(*characters_printed) += strlen(buffer);
+  write(STDOUT_FILENO, buffer, strlen(buffer));
+  (*characters_printed) += strlen(buffer);
 }
 
 /**
@@ -83,14 +84,14 @@ void print_unsigned_int(va_list list_print, int *characters_printed,
  */
 void print_str_hex(char *str, int *printed_chars)
 {
-	while (*str)
+  while (*str)
 	{
-		if (*str >= 32 && *str <= 126)
+	  if (*str >= 32 && *str <= 126)
 		{
-			putchar(*str);
-			(*printed_chars)++;
+		  putchar(*str);
+		  (*printed_chars)++;
 		}
-		str++;
+	  str++;
 	}
 }
 
@@ -116,17 +117,18 @@ void print_str_hex(char *str, int *printed_chars)
 void handle_format_specifier_uppercase(const char **format, va_list list_print,
 									   int *characters_printed)
 {
-	switch (**format)
+  switch (**format)
 	{
 	case 'X':
-		print_unsigned_integer(list_print, characters_printed, 16, 1);
-		(*format)++;
-		break;
+	  print_unsigned_integer(list_print, characters_printed, 16, 1);
+	  (*format)++;
+	  break;
 	case 'S':
-		print_str_hex(va_arg(list_print, char *), characters_printed);
-		(*format)++;
-		break;
-	case 'R': {
+	  print_str_hex(va_arg(list_print, char *), characters_printed);
+	  (*format)++;
+	  break;
+	case 'R':
+	  {
 		char *text = va_arg(list_print, char *);
 		char *rot13_string = rot13(text);
 
@@ -134,42 +136,40 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 		(*characters_printed) += strlen(rot13_string);
 		(*format)++;
 		break;
-		}
+	  }
 	default:
-		print_unknown(**format, characters_printed);
-		(*format)++;
+	  print_unknown(**format, characters_printed);
+	  (*format)++;
 	}
 }
-
-
 
 /* https://en.wikipedia.org/wiki/ROT13 */
 char *rot13(char *message)
 {
-	size_t i;
+  size_t i;
 
-	size_t len = strlen(message);
-	char *output = (char *) malloc(len + 1);
-	char *outptr = output;
+  size_t len = strlen(message);
+  char *output = (char *)malloc(len + 1);
+  char *outptr = output;
 
-	for (i = 0; i < len; i++)
+  for (i = 0; i < len; i++)
 	{
-		if (*message >= 'a' && *message <= 'z')
+	  if (*message >= 'a' && *message <= 'z')
 		{
-			int h = (*message - 'a' + 13) % 26 + 'a';
-			*outptr = h;
+		  int h = (*message - 'a' + 13) % 26 + 'a';
+		  *outptr = h;
 		}
-		else if (*message >= 'A' && *message <= 'Z')
+	  else if (*message >= 'A' && *message <= 'Z')
 		{
-			*outptr = (*message - 'A' + 13) % 26 + 'A';
+		  *outptr = (*message - 'A' + 13) % 26 + 'A';
 		}
-		else
+	  else
 		{
-			*outptr = *message;
+		  *outptr = *message;
 		}
-		message++;
-		outptr++;
+	  message++;
+	  outptr++;
 	}
-	*outptr = '\0';
-	return (output);
+  *outptr = '\0';
+  return (output);
 }
