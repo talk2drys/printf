@@ -145,7 +145,7 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 	switch (**format)
 	{
 	case 'X':
-		print_unsigned_integer(list_print, characters_printed, 16, 1);
+		print_unsigned_integer(list_print, characters_printed, '\0', 16, 1);
 		(*format)++;
 		break;
 	case 'S':

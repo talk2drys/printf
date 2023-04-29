@@ -16,7 +16,7 @@ void print_unsigned_int(va_list list_print, int *characters_printed,
 												unsigned int base);
 
 void print_unsigned_integer(va_list list_print, int *characters_printed,
-														int base, int uppercase);
+														char length_modifier, int base, int uppercase);
 /* we alreadt have a print_string definition */
 void print_str_hex(char *str, int *printed_chars);
 void print_pointer(va_list list_print, int *characters_printed);
@@ -32,6 +32,6 @@ void print_unknown(char unknown, int *characters_printed);
 char *rot13(char *message);
 void handle_str_reverse_modifier(va_list list_print, int *characters_printed);
 char *str_reverse(char *str);
-void handle_ouxX(va_list list_print, int *characters_printed,
+void handle_ouxX(va_list list_print, int *characters_printed, char length_modifier,
 								 char conversion_specifier);
 #endif
