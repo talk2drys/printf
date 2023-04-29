@@ -180,6 +180,7 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 char *rot13(char *message)
 {
 	size_t i;
+	char *outptr;
 
 	size_t len = strlen(message);
 	char *output = (char *)malloc(len + 1);
@@ -187,7 +188,7 @@ char *rot13(char *message)
 	if (output == NULL)
 		return (NULL);
 
-	char *outptr = output;
+	outptr = output;
 
 	for (i = 0; i < len; i++)
 	{
