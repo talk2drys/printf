@@ -86,23 +86,33 @@ void print_percent(int *characters_printed)
  * character to be printed from the argument list.
  *
  * @characters_printed: a pointer to an integer that keeps track of
- * the number of characters printed so far. This parameter is used to
- * update the count of characters printed.
+ * the number of characters printed so far.
  *
- * Returns: void
+ * @length_modifier: l or h
  **/
-void print_integer(va_list list_print, int *characters_printed)
+void print_integer(va_list list_print, int *characters_printed,
+									 char length_modifier)
 {
-	int integer = va_arg(list_print, int);
-	/**
-	 * assuming the maximum integer length is 11 digits
-	 * plus sign if negative and a null terminator. the 11
-	 * is gotten from max character that can hold
-	 * max number that can be stored in an int
-	 */
-	char buffer[12];
+	long int long_integer = 0;
+	short int short_integer = 0;
+	int integer = 0;
+	char buffer[22];
 
-	snprintf(buffer, 12, "%d", integer);
+	switch (length_modifier)
+	{
+	case 'l':
+		long_integer = va_arg(list_print, long int);
+		snprintf(buffer, 22, "%ld", long_integer);
+		break;
+	case 'h':
+		short_integer = va_arg(list_print, int);
+		snprintf(buffer, 8, "%hd", short_integer);
+		break;
+	default:
+		integer = va_arg(list_print, int);
+		snprintf(buffer, 12, "%d", integer);
+		break;
+	}
 
 	write(STDOUT_FILENO, buffer, strlen(buffer));
 	fflush(stdout);
@@ -131,41 +141,43 @@ void print_integer(va_list list_print, int *characters_printed)
 void handle_format_specifier_lowercase(const char **format, va_list list_print,
 																			 int *characters_printed)
 {
+	char length_modifier = '\0';
+
+	if (**format == 'l' || **format == 'h')
+	{
+		length_modifier = **format;
+		(*format)++;
+	}
+
 	switch (**format)
 	{
 	case 'c':
 		print_char(list_print, characters_printed);
-		(*format)++;
 		break;
 	case 's':
 		print_string(list_print, characters_printed);
-		(*format)++;
 		break;
 	case 'd':
 	case 'i':
-		print_integer(list_print, characters_printed);
-		(*format)++;
+		print_integer(list_print, characters_printed, length_modifier);
 		break;
 	case 'b':
 		print_binary(list_print, characters_printed);
-		(*format)++;
 		break;
 	case 'p':
 		print_pointer_address(list_print, characters_printed);
-		(*format)++;
 		break;
 	case 'u':
 	case 'o':
 	case 'x':
 		handle_ouxX(list_print, characters_printed, **format);
-		(*format)++;
 		break;
 	case 'r':
 		handle_str_reverse_modifier(list_print, characters_printed);
-		(*format)++;
 		break;
 	default:
 		print_unknown(**format, characters_printed);
-		(*format)++;
+		break;
 	}
+	(*format)++;
 }
