@@ -41,36 +41,19 @@ void print_char(va_list list_print, int *characters_printed)
  *
  * Returns: void
  **/
-void print_string(va_list list_print, int *characters_printed,
-									int left_justified)
+void print_string(va_list list_print, int *characters_printed)
 {
 	char *string = va_arg(list_print, char *);
-	size_t string_len = strlen(string);
-	size_t padding = 0;
 
 	if (string == NULL)
 	{
 		write(STDOUT_FILENO, "(null)", 6);
 		(*characters_printed) += 6;
-		return;
-	}
-
-	if (left_justified)
-	{
-		write(STDOUT_FILENO, string, string_len);
-		(*characters_printed) += string_len;
-		padding = left_justified - string_len;
 	}
 	else
 	{
-		padding = left_justified - string_len;
-		for (size_t i = 0; i < padding; i++)
-		{
-			write(STDOUT_FILENO, " ", 1);
-			(*characters_printed)++;
-		}
-		write(STDOUT_FILENO, string, string_len);
-		(*characters_printed) += string_len;
+		write(STDOUT_FILENO, string, strlen(string));
+		(*characters_printed) += strlen(string);
 	}
 
 	fflush(stdout);
@@ -107,26 +90,27 @@ void print_percent(int *characters_printed)
  *
  * @length_modifier: l or h
  **/
-void print_integer(va_list list_print, int *characters_printed, char length_modifier)
+void print_integer(va_list list_print, int *characters_printed,
+									 char length_modifier)
 {
 	long int long_integer = 0;
 	short int short_integer = 0;
 	int integer = 0;
-	char buffer[20];
+	char buffer[22];
 
 	switch (length_modifier)
 	{
 	case 'l':
 		long_integer = va_arg(list_print, long int);
-		snprintf(buffer, sizeof(buffer), "%lX", long_integer);
+		snprintf(buffer, 22, "%ld", long_integer);
 		break;
 	case 'h':
-		short_integer = va_arg(list_print, short int);
-		snprintf(buffer, sizeof(buffer), "%hX", short_integer);
+		short_integer = va_arg(list_print, int);
+		snprintf(buffer, 8, "%hd", short_integer);
 		break;
 	default:
 		integer = va_arg(list_print, int);
-		snprintf(buffer, sizeof(buffer), "%X", integer);
+		snprintf(buffer, 12, "%d", integer);
 		break;
 	}
 
@@ -158,13 +142,6 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 																			 int *characters_printed)
 {
 	char length_modifier = '\0';
-	int left_justified = 0;
-
-	if (**format == '-')
-	{
-		left_justified = 1;
-		(*format)++;
-	}
 
 	if (**format == 'l' || **format == 'h')
 	{
@@ -193,10 +170,7 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 	case 'u':
 	case 'o':
 	case 'x':
-		handle_ouxX(list_print, characters_printed, length_modifier, **format);
-		break;
-	case 'X':
-		handle_ouxX(list_print, characters_printed, length_modifier, **format);
+		handle_ouxX(list_print, characters_printed, **format);
 		break;
 	case 'r':
 		handle_str_reverse_modifier(list_print, characters_printed);

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <ctype.h>
 
 #define True 1
 #define False 0
@@ -56,55 +55,34 @@ void print_unknown(char unknown, int *characters_printed)
  * @uppercase: specify if the specifier is an upper case letter example 'x' 'X'
  * return: void
  */
-void print_unsigned_integer(va_list list_print, int *characters_printed, char length_modifier, int base, int uppercase)
+void print_unsigned_integer(va_list list_print, int *characters_printed,
+														int base, int uppercase)
 {
-	unsigned long long unsigned_integer = 0;
-	unsigned int uinteger = 0;
-	unsigned short int ushort_integer = 0;
-	unsigned char uchar_integer = 0;
-	char buffer[40];
+	char buffer[20];
+	unsigned int number = va_arg(list_print, unsigned int);
+	int digit, i = 0;
+	char format = uppercase ? 'A' : 'a';
 
-	switch (length_modifier)
+	if (number == 0)
 	{
-	case 'l':
-		if (base == 10)
-			unsigned_integer = va_arg(list_print, unsigned long long);
-		else
-			uinteger = va_arg(list_print, unsigned int);
-		break;
-	case 'h':
-		if (base == 10)
-			ushort_integer = va_arg(list_print, unsigned int);
-		else
-			uchar_integer = va_arg(list_print, unsigned int) & 0xFF;
-		break;
-	default:
-		uinteger = va_arg(list_print, unsigned int);
-		break;
+		buffer[i++] = '0';
 	}
-
-	if (length_modifier == 'l' && base == 10)
-		snprintf(buffer, sizeof(buffer), "%llu", unsigned_integer);
-	else if (length_modifier == 'h' && base == 10)
-		snprintf(buffer, sizeof(buffer), "%hu", ushort_integer);
-	else if (length_modifier == 'h' && base != 10)
-		snprintf(buffer, sizeof(buffer), "%hhX", uchar_integer);
-	else if (base == 10)
-		snprintf(buffer, sizeof(buffer), "%u", uinteger);
 	else
-		snprintf(buffer, sizeof(buffer), "%X", uinteger);
-
-	if (uppercase)
 	{
-		for (int i = 0; i < strlen(buffer); i++)
+		while (number != 0)
 		{
-			buffer[i] = toupper(buffer[i]);
+			digit = number % base;
+			buffer[i++] = digit < 10 ? '0' + digit : format + digit - 10;
+			number /= base;
 		}
 	}
 
-	write(STDOUT_FILENO, buffer, strlen(buffer));
-	fflush(stdout);
-	(*characters_printed) += strlen(buffer);
+	while (--i >= 0)
+	{
+		write(STDOUT_FILENO, &buffer[i], 1);
+		fflush(stdout);
+		(*characters_printed)++;
+	}
 }
 
 /**
