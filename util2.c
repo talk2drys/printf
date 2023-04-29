@@ -156,6 +156,9 @@ void handle_format_specifier_uppercase(const char **format, va_list list_print,
 		char *text = va_arg(list_print, char *);
 		char *rot13_string = rot13(text);
 
+		if (rot13_string == NULL)
+			return;
+
 		write(STDOUT_FILENO, rot13_string, strlen(rot13_string));
 		fflush(stdout);
 		(*characters_printed) += strlen(rot13_string);
@@ -179,6 +182,10 @@ char *rot13(char *message)
 
 	size_t len = strlen(message);
 	char *output = (char *)malloc(len + 1);
+
+	if (output == NULL)
+		return NULL;
+
 	char *outptr = output;
 
 	for (i = 0; i < len; i++)
