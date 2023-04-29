@@ -90,27 +90,26 @@ void print_percent(int *characters_printed)
  *
  * @length_modifier: l or h
  **/
-void print_integer(va_list list_print, int *characters_printed,
-									 char length_modifier)
+void print_integer(va_list list_print, int *characters_printed, char length_modifier)
 {
 	long int long_integer = 0;
 	short int short_integer = 0;
 	int integer = 0;
-	char buffer[22];
+	char buffer[20];
 
 	switch (length_modifier)
 	{
 	case 'l':
 		long_integer = va_arg(list_print, long int);
-		snprintf(buffer, 22, "%ld", long_integer);
+		snprintf(buffer, sizeof(buffer), "%lX", long_integer);
 		break;
 	case 'h':
-		short_integer = va_arg(list_print, int);
-		snprintf(buffer, 8, "%hd", short_integer);
+		short_integer = va_arg(list_print, short int);
+		snprintf(buffer, sizeof(buffer), "%hX", short_integer);
 		break;
 	default:
 		integer = va_arg(list_print, int);
-		snprintf(buffer, 12, "%d", integer);
+		snprintf(buffer, sizeof(buffer), "%X", integer);
 		break;
 	}
 
@@ -170,7 +169,10 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 	case 'u':
 	case 'o':
 	case 'x':
-		handle_ouxX(list_print, characters_printed, **format);
+		handle_ouxX(list_print, characters_printed, length_modifier, **format);
+		break;
+	case 'X':
+		handle_ouxX(list_print, characters_printed, length_modifier, **format);
 		break;
 	case 'r':
 		handle_str_reverse_modifier(list_print, characters_printed);
