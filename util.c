@@ -41,19 +41,36 @@ void print_char(va_list list_print, int *characters_printed)
  *
  * Returns: void
  **/
-void print_string(va_list list_print, int *characters_printed)
+void print_string(va_list list_print, int *characters_printed,
+									int left_justified)
 {
 	char *string = va_arg(list_print, char *);
+	size_t string_len = strlen(string);
+	size_t padding = 0;
 
 	if (string == NULL)
 	{
 		write(STDOUT_FILENO, "(null)", 6);
 		(*characters_printed) += 6;
+		return;
+	}
+
+	if (left_justified)
+	{
+		write(STDOUT_FILENO, string, string_len);
+		(*characters_printed) += string_len;
+		padding = left_justified - string_len;
 	}
 	else
 	{
-		write(STDOUT_FILENO, string, strlen(string));
-		(*characters_printed) += strlen(string);
+		padding = left_justified - string_len;
+		for (size_t i = 0; i < padding; i++)
+		{
+			write(STDOUT_FILENO, " ", 1);
+			(*characters_printed)++;
+		}
+		write(STDOUT_FILENO, string, string_len);
+		(*characters_printed) += string_len;
 	}
 
 	fflush(stdout);
@@ -142,6 +159,13 @@ void handle_format_specifier_lowercase(const char **format, va_list list_print,
 																			 int *characters_printed)
 {
 	char length_modifier = '\0';
+	int left_justified = 0;
+
+	if (**format == '-')
+	{
+		left_justified = 1;
+		(*format)++;
+	}
 
 	if (**format == 'l' || **format == 'h')
 	{

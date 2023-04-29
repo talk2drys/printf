@@ -4,7 +4,9 @@
 #include <stdarg.h>
 
 void print_char(va_list list_print, int *characters_printed);
-void print_string(va_list list_print, int *characters_printed);
+void print_string(va_list list_print, int *characters_printed,
+									int left_justified);
+
 void print_percent(int *characters_printed);
 void print_percent(int *characters_printed);
 void handle_format_specifier(const char **format, va_list list_print,
