@@ -32,6 +32,7 @@ void print_binary(va_list list_print, int *characters_printed)
 	if (number == 0)
 	{
 		char c = '0';
+
 		write(STDOUT_FILENO, &c, 1);
 		fflush(stdout);
 		(*characters_printed)++;
@@ -184,7 +185,7 @@ char *rot13(char *message)
 	char *output = (char *)malloc(len + 1);
 
 	if (output == NULL)
-		return NULL;
+		return (NULL);
 
 	char *outptr = output;
 
